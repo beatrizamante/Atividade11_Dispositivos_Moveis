@@ -10,14 +10,19 @@ import { router } from "expo-router";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ImageButton from "../components/ImageButton";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Login() {
+  const { colors, theme } = useTheme();
   const [login, onChangeLogin] = React.useState("");
   const [password, onChangePassword] = React.useState("");
 
   const [err, setErr] = React.useState("");
+  
+  const imageSource = theme === 'light'
+    ? require('../assets/images/light/login_light.png')
+    : require('../assets/images/dark/login_dark.png');
 
   const handleLogin = () => {
     if (login === "fulano" && password === "123") {
@@ -30,37 +35,75 @@ export default function Login() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.container_up}>
-          <Text style={styles.welcome_text}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: colors.backgroundSecondary },
+        ]}
+      >
+        <View
+          style={[
+            styles.container_up,
+            { backgroundColor: colors.backgroundPrimary },
+          ]}
+        >
+          <Text
+            style={[styles.welcome_text, { color: colors.textColorPrimary }]}
+          >
             Please, sign up to fly with us!
           </Text>
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.backgroundInputColor,
+                color: colors.textColorSecondary,
+              },
+            ]}
             onChangeText={onChangeLogin}
             value={login}
             placeholder="Login"
-            placeholderTextColor={"#706C6C"}
+            placeholderTextColor={colors.textColorSecondary}
           />
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.backgroundInputColor,
+                color: colors.textColorSecondary,
+              },
+            ]}
             onChangeText={onChangePassword}
             value={password}
             placeholder="Password"
             keyboardType="default"
             secureTextEntry={true}
-            placeholderTextColor={"#706C6C"}
+            placeholderTextColor={colors.textColorSecondary}
           />
-          {err ? <Text style={styles.error_text}>{err}</Text> : null}
-          </View>
-          <View style={styles.container_down}>  
-          <Image source={require("../assets/image_login.png")}></Image>
+          {err ? (
+            <Text
+              style={[styles.error_text, { color: colors.textColorPrimary }]}
+            >
+              {err}
+            </Text>
+          ) : null}
+        </View>
+        <Image
+          style={styles.middle_image}
+          resizeMode="contain"
+          source={imageSource}
+        ></Image>
+        <View
+          style={[
+            styles.container_down,
+            { backgroundColor: colors.backgroundTertiary },
+          ]}
+        >
           <ImageButton
             onPress={handleLogin}
-            uri={require("../assets/image_button.png")}
           />
         </View>
-          <Footer/>
+        <Footer />
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -70,26 +113,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center", 
-    backgroundColor: "#243046"
-
+    alignItems: "center",
   },
   container_up: {
     height: 360,
     width: 380,
-    backgroundColor: "#38415D",
     justifyContent: "space-evenly",
     alignItems: "center",
-    marginTop: 10
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    marginTop: 10,
   },
   container_down: {
     height: 360,
     width: 380,
-    backgroundColor: "#FFFFFF",
     justifyContent: "space-evenly",
     alignItems: "center",
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
     marginBottom: 12,
-    paddingBottom:10
+    paddingBottom: 10,
   },
   input: {
     padding: 10,
@@ -97,22 +140,20 @@ const styles = StyleSheet.create({
     width: 350,
     margin: 32,
     borderRadius: 15,
-    backgroundColor: "#F6F1ED",
   },
-  center_image: {
+  middle_image: {
     width: 350,
-    height: 256,
+    height: 200,
+    zIndex: 1
   },
   welcome_text: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#FFFFFF",
   },
   error_text: {
     borderRadius: 15,
     borderWidth: 2,
     borderColor: "#B11818",
-    color: "#FFF",
-    padding: 8
-  }
+    padding: 8,
+  },
 });

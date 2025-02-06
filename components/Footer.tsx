@@ -1,23 +1,25 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import DarkThemeButton from './DarkThemeButton'
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function Footer() {
+    const { toggleTheme, colors } = useTheme();  
+  
   return (
-    <View style={style.container}>
-      <DarkThemeButton onPress={() => {}} color={'#243046'}/>
-      <Text style={style.text}>We take you where you need to be . . .</Text>
+    <View style={[styles.container, { backgroundColor: colors.backgroundColorFooter }]}>
+      <DarkThemeButton onPress={toggleTheme}/>
+      <Text style={[styles.text, { color: colors.textColorFooter }]}>We take you where you need to be...</Text>
     </View>
   )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    width: 380,
+    width: 380, 
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
-    backgroundColor: "#F6F1ED", 
     height: 50
   },
   text: {

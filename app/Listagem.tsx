@@ -3,31 +3,31 @@ import React from "react";
 import DATA from "../services/data-passengers";
 import ScrollList from "../components/ScrollList";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function list() {
+  const { colors } = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundSecondary }]}>
       <View>
-        <Text style={styles.title}>Vôos</Text>
+        <Text style={[styles.title, { color: colors.textColorPrimary }]}>Vôos</Text>
       </View>
       <ScrollList data={DATA} />
-      <Footer/>
+      <Footer />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: "#243046",
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   title: {
     fontSize: 26,
     padding: 4,
     fontWeight: "semibold",
-    color: "#F6F1ED"
   },
-})
+});

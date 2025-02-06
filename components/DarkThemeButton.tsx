@@ -1,18 +1,26 @@
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, StyleSheet } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useTheme } from "../contexts/ThemeContext";
 
-type HamButtonProps = {
+type ThemeToggleProps = {
   onPress: () => void
-  color: string;
 };
 
-export default function HamButton({ onPress, color = ""}: HamButtonProps) {
-
+export default function ThemeButton({ onPress }: ThemeToggleProps) {
+  const { colors } = useTheme();  
+  
   return (
     <View>
         <TouchableOpacity onPress={onPress}>
-            <Ionicons name="moon-outline" size={40} color={color}></Ionicons>
+            <Ionicons name="moon-outline" size={40} style={[styles.container, { color: colors.themeButtomColor }]} ></Ionicons>
         </TouchableOpacity>
       </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingLeft: 5
+  },
+})
+
