@@ -10,6 +10,7 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import helper, { Passenger } from "../services/data-helper";
 import Line from "./Line";
+import { useTheme } from "../contexts/ThemeContext";
 
 type ListProps = {
   data: Passenger[];
@@ -17,37 +18,87 @@ type ListProps = {
 
 export default function ScrollList({ data }: ListProps) {
   const DATA = helper(data);
+  const { colors } = useTheme();
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: colors.backgroundPrimary },
+        ]}
+      >
         <SectionList
           sections={DATA}
           keyExtractor={(item, index) => item.passenger_name + index}
           renderItem={({ item }) => (
-            <View style={styles.container_passenger}>
-  <Image
-    style={styles.avatar}
-    source={{ uri: item.passenger_avatar }}
-  />
-  <View style={styles.passenger_info}>
-    <Text style={styles.infoTitles}>
-      Nome: <Text style={styles.infoText}>{item.passenger_name}</Text>
-    </Text>
-    <View style={styles.row}>
-      <Text style={styles.infoTitles}>
-        Origem: <Text style={styles.infoText}>{item.origin}</Text>
-      </Text>
-      <Text style={styles.infoTitles}>
-        Destino: <Text style={styles.infoText}>{item.destination}</Text>
-      </Text>
-    </View>
-    <Line/>
-  </View>
-</View>
+            <View
+              style={[
+                styles.container_passenger,
+                { backgroundColor: colors.backgroundSecondary },
+              ]}
+            >
+              <Image
+                style={styles.avatar}
+                source={{ uri: item.passenger_avatar }}
+              />
+              <View style={styles.passenger_info}>
+                <Text
+                  style={[
+                    styles.infoTitles,
+                    { color: colors.textColorPrimary },
+                  ]}
+                >
+                  Nome:{" "}
+                  <Text
+                    style={[
+                      styles.infoText,
+                      { color: colors.textColorPrimary },
+                    ]}
+                  >
+                    {item.passenger_name}
+                  </Text>
+                </Text>
+                <View style={styles.row}>
+                  <Text
+                    style={[
+                      styles.infoTitles,
+                      { color: colors.textColorPrimary },
+                    ]}
+                  >
+                    Origem:{" "}
+                    <Text
+                      style={[
+                        styles.infoText,
+                        { color: colors.textColorPrimary },
+                      ]}
+                    >
+                      {item.origin}
+                    </Text>
+                  </Text>
+                  <Text
+                    style={[
+                      styles.infoTitles,
+                      { color: colors.textColorPrimary },
+                    ]}
+                  >
+                    Destino:{" "}
+                    <Text
+                      style={[
+                        styles.infoText,
+                        { color: colors.textColorPrimary },
+                      ]}
+                    >
+                      {item.destination}
+                    </Text>
+                  </Text>
+                </View>
+                <Line />
+              </View>
+            </View>
           )}
           renderSectionHeader={({ section: { category } }) => (
             <View style={styles.categories_container}>
-              <Text style={styles.categories}>{category}</Text>
+              <Text style={[styles.categories, { color: colors.textColorPrimary }]}>{category}</Text>
             </View>
           )}
         />
@@ -65,47 +116,43 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   container_passenger: {
-    flexDirection: "row", 
+    flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#30415D",
     padding: 10,
     marginVertical: 4,
-    borderRadius: 5, 
+    borderRadius: 5,
   },
   avatar: {
     width: 60,
     height: 60,
     borderRadius: 30,
     backgroundColor: "#FFF",
-    marginRight: 10, 
+    marginRight: 10,
   },
   passenger_info: {
-    flex: 1, 
+    flex: 1,
   },
   row: {
     flexDirection: "row",
-    justifyContent: "space-between", 
+    justifyContent: "space-between",
     marginTop: 5,
   },
   infoTitles: {
     fontSize: 16,
-    fontWeight: "400", 
-    color: "#FFFFFF",
+    fontWeight: "400",
   },
   infoText: {
     fontSize: 14,
-    fontWeight: "200", 
-    color: "#FFFFFF",
+    fontWeight: "200",
   },
   categories: {
     fontSize: 18,
     fontWeight: "semibold",
     textDecorationLine: "underline",
-    color: "#FFF"
   },
   categories_container: {
     padding: 4,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });

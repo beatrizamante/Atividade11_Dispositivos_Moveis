@@ -3,12 +3,14 @@ import React from "react";
 import HamButton from "./HamButton";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { router } from "expo-router";
+import { useTheme } from "../contexts/ThemeContext";
 
 type contextProps = {
   context: "Listagem" | "Sobre";
 };
 
 export default function Header({ context }: contextProps) {
+  const { colors } = useTheme();  
   const { showActionSheetWithOptions } = useActionSheet();
 
   const handleNav = () => {
@@ -56,13 +58,13 @@ export default function Header({ context }: contextProps) {
   };
 
   return (
-    <View style={style.container}>
+    <View style={[style.container, {backgroundColor: colors.backgroundPrimary }]}>
       <View>
         <Image
           source={require("../assets/plane_logo.png")}
           style={style.icon}
         ></Image>
-        <Text style={style.text_header}>ocean airlines . . .</Text>
+        <Text style={[style.text_header, { color: colors.textColorPrimary }]}>ocean airlines . . .</Text>
       </View>
       <HamButton onPress={handleNav} />
     </View>
