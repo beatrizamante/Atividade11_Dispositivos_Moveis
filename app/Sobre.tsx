@@ -20,7 +20,7 @@ export default function Sobre() {
 
   return (
     <View style={[style.container, { backgroundColor: colors.backgroundSecondary }]}>
-      <View style={[style.container_up, { backgroundColor: colors.backgroundPrimary }]}>
+      <View style={[style.container_up, { backgroundColor: colors.backgroundSecondary }]}>
         <Image
           source={require("../assets/profile_pic.png")}
           style={style.avatar}
