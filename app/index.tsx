@@ -19,10 +19,11 @@ export default function Login() {
   const [password, onChangePassword] = React.useState("");
 
   const [err, setErr] = React.useState("");
-  
-  const imageSource = theme === 'light'
-    ? require('../assets/images/light/login_light.png')
-    : require('../assets/images/dark/login_dark.png');
+
+  const imageSource =
+    theme === "light"
+      ? require("../assets/images/light/login_light.png")
+      : require("../assets/images/dark/login_dark.png");
 
   const handleLogin = () => {
     if (login === "fulano" && password === "123") {
@@ -50,7 +51,9 @@ export default function Login() {
           <Text
             style={[styles.welcome_text, { color: colors.textColorPrimary }]}
           >
-            Please, sign up to fly with us!
+            Your car boutique 
+            Find any brands 
+            Get your dream model
           </Text>
           <TextInput
             style={[
@@ -99,9 +102,7 @@ export default function Login() {
             { backgroundColor: colors.backgroundTertiary },
           ]}
         >
-          <ImageButton
-            onPress={handleLogin}
-          />
+          <ImageButton onPress={handleLogin} />
         </View>
         <Footer />
       </SafeAreaView>
@@ -144,11 +145,11 @@ const styles = StyleSheet.create({
   middle_image: {
     width: 350,
     height: 200,
-    zIndex: 1
+    zIndex: 1,
   },
   welcome_text: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "Julius Sans One",
   },
   error_text: {
     borderRadius: 15,
